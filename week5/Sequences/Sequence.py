@@ -25,7 +25,7 @@ class Sequence(SeqABC):
     """ Add the passed value to the sequence """
     def addToSeq(self, toAdd):
         # only need to append the value to seqArray
-        if(instanceof(toAdd, int)):
+        if(isinstance(toAdd, int)):
             self.seqArray.append(toAdd)
         # it will not append a non integer value
 
@@ -39,7 +39,7 @@ class Sequence(SeqABC):
     """
     def get(self, index):
         # verify that index is an int
-        if(instanceof(index, int) != True):
+        if(isinstance(index, int) != True):
             return -1
         else:
             return 1
@@ -49,3 +49,19 @@ class Sequence(SeqABC):
 
     def nonDecrOrnonIncr(self):
         return None
+
+    """ Return the sequence as a formatted string """
+    def displaySeqElements(self):
+        # Iterate over the sequence, appending them to this string
+        toPrint = "Sequence = "
+        for i in range(len(self.seqArray)):
+            toPrint += ("seqArray(" + i + "):" + seqArray.index(i) + ", ")
+        return toPrint
+
+    """ This will print data about the sequence, formatted to be 
+        descriptive. This will assume the sequence begins at index 0.
+        There will be no return, as display will print the data in place.
+    """
+    def toString(self):
+        # Seperate print statements by line
+        print("This is your finite sequence: \n")
