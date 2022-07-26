@@ -44,5 +44,5 @@ class SeqABC(ABC):
                 is a requirement.
     """
     @abstractmethod
-    def nonDecrOrnonIncr(self)
+    def nonDecrOrnonIncr(self):
         pass

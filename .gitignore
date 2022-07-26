@@ -1,0 +1,3 @@
+# ignore anything in pycache
+week5/Sequences/__pycache__
+week5/Sequences/__pychache__/*
