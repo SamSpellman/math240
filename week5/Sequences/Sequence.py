@@ -44,8 +44,60 @@ class Sequence(SeqABC):
         else:
             return 1
 
+    """ Compare two numbers to determine which is greater.
+        This is a helper method.
+
+        CASE greater: return 1
+        CASE lesser: return -1
+        CASE equal: return 0
+    """
+    def getTrend(x, y):
+        if(x > y):
+            return 1
+        elif(x < y):
+            return -1
+        else:
+            return 0
+
+    """ Categorize seqArray as increasing, decreasing, or neither. 
+        
+        CASE increasing: return 1
+        CASE decreasing: return -1
+        CASE neither: return 0
+    """
     def IncrOrDecr(self):
-        return None
+        # Iterate over the entire sequence to validate any trend
+        trend = 0
+        passed = None
+        for element in seqArray:
+            # validate a trend across the whole array
+            if(trend == 0 and passed == None):
+                # still need to figure out a trend
+                passed = element
+                # the continue sttmnt will go to next for loop iteration
+                continue
+            elif(trend == 0):
+                match getTrend(element, passed):
+                    case 1:
+                        # INCREASING
+                        trend = 1
+                        passed = element
+                    case -1:
+                        # DECREASING
+                        trend = -1
+                        passed = element
+                    case 0:
+                        # NEITHER: end loop
+                        trend = 0
+                        break
+            else:
+                # the trend is set
+                if(getTrend(element, passed) != trend):
+                    # TREND BROKEN: break loop
+                    trend = 0
+                    break
+
+        return trend
 
     def nonDecrOrnonIncr(self):
         return None
@@ -55,7 +107,7 @@ class Sequence(SeqABC):
         # Iterate over the sequence, appending them to this string
         toPrint = "Sequence = "
         for i in range(len(self.seqArray)):
-            toPrint += ("seqArray(" + i + "):" + seqArray.index(i) + ", ")
+            toPrint += ("seqArray(" + str(i) + "):" + str(self.seqArray[i]) + ", ")
         return toPrint
 
     """ This will print data about the sequence, formatted to be 
@@ -65,3 +117,4 @@ class Sequence(SeqABC):
     def toString(self):
         # Seperate print statements by line
         print("This is your finite sequence: \n")
+        print(self.displaySeqElements())
