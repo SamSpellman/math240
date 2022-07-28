@@ -51,7 +51,7 @@ class Sequence(SeqABC):
         CASE lesser: return -1
         CASE equal: return 0
     """
-    def getTrend(x, y):
+    def getTrend(self, x, y):
         if(x > y):
             return 1
         elif(x < y):
@@ -68,8 +68,9 @@ class Sequence(SeqABC):
     def IncrOrDecr(self):
         # Iterate over the entire sequence to validate any trend
         trend = 0
+        trendCheck = 0
         passed = None
-        for element in seqArray:
+        for element in self.seqArray:
             # validate a trend across the whole array
             if(trend == 0 and passed == None):
                 # still need to figure out a trend
@@ -77,25 +78,19 @@ class Sequence(SeqABC):
                 # the continue sttmnt will go to next for loop iteration
                 continue
             elif(trend == 0):
-                match getTrend(element, passed):
-                    case 1:
-                        # INCREASING
-                        trend = 1
-                        passed = element
-                    case -1:
-                        # DECREASING
-                        trend = -1
-                        passed = element
-                    case 0:
-                        # NEITHER: end loop
-                        trend = 0
-                        break
+                trend = self.getTrend(element, passed)
+                passed = element
+                # check for absence of trend
+                if(trend == 0):
+                    break 
             else:
                 # the trend is set
-                if(getTrend(element, passed) != trend):
+                if(self.getTrend(element, passed) != trend):
                     # TREND BROKEN: break loop
                     trend = 0
                     break
+                # if trend is not broken set up for next loop
+                passed = element
 
         return trend
 
