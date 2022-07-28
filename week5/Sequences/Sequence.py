@@ -94,7 +94,46 @@ class Sequence(SeqABC):
 
         return trend
 
+    """ Categorize seqArray as non decreasing, non increasing, or neither.
+        This means a trend cannot reverse, but it can plateau.
+        
+        CASE non decreasing: return 1
+        CASE non increasing: return -1
+        CASE neither: 0
+    """
     def nonDecrOrnonIncr(self):
+        # Start by checking for an existing trend
+        currTrend = self.IncrOrDecr()
+        trendValidate = 0
+        trend = 0
+        passed = None
+
+        if(currTrend != 0):
+            # Has a broader category, so it fits sub categ. of non increasing
+            # or non decreasing.
+            return currTrend
+        # else
+        for element in self.seqArray:
+            # Validate that a trend doesn't reverse, but an equal comparison
+            # is fine. 
+            # Need to pass validation on first loop
+            if(passed == None):
+                passed = element
+                continue
+            else:
+                trendValidate = self.getTrend(element, passed)
+                if(trend == 0):
+                    # First pass through, set the trend
+                    trend = trendValidate
+                    continue
+                if(trendValidate != 0 and trendValidate != trend):
+                    # broke the trend
+                    trend = 0
+                    return trend
+            # if trend is not broken set up for next loop
+            passed = element
+
+
         return None
 
     """ Return the sequence as a formatted string """
